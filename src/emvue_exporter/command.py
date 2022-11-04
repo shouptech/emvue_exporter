@@ -40,7 +40,7 @@ def main():
 
     while True:
         set_prometheus_values(collectors, vue)
-        time.sleep(os.getenv("EMVUE_EXPORTER_POLL_DELAY", 15))
+        time.sleep(os.getenv("EMVUE_EXPORTER_POLL_DELAY", 60))
 
 
 def register_prometheus_collectors():
