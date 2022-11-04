@@ -5,6 +5,28 @@ Emporia Energy Vue Exporter
 This is an application for exporting usage metrics from the Emporia Energy Vue units.
 This exporter utilizes the Emporia Energy Cloud, and the `PyEmVue`_ module.
 
+This exporter retrieves energy usage for all channels on all devices registered to an
+account. The energy usage will be the last minute's recorded usage in killowatt-hours (kWh).
+
+The Emporia API is polled once each 60 seconds, thus there is no benefit to scraping the
+exporter with Prometheus more frequently than 60 seconds.
+
+Example metrics:
+
+::
+
+    # HELP emvue_device_energy_kwh Energy Usage for device
+    # TYPE emvue_device_energy_kwh gauge
+    emvue_device_energy_kwh{channel_name="Main",device_name="Home"} 0.006016770889494154
+    emvue_device_energy_kwh{channel_name="Dryer",device_name="Home"} 0.0
+    emvue_device_energy_kwh{channel_name="Air Conditioning",device_name="Home"} 0.0
+    emvue_device_energy_kwh{channel_name="Living Room",device_name="Home"} 0.0008123266612158882
+    emvue_device_energy_kwh{channel_name="Bahtroom",device_name="Home"} 0.0006453464963701035
+    emvue_device_energy_kwh{channel_name="Kitchen",device_name="Home"} 0.004173242407904731
+    emvue_device_energy_kwh{channel_name="Furnace",device_name="Home"} 0.00016466963026258677
+    emvue_device_energy_kwh{channel_name="Balance",device_name="Home"} 0.00017345325509707162
+
+
 .. _PyEmVue: https://github.com/magico13/PyEmVue
 
 Installation

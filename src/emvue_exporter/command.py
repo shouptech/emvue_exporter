@@ -46,8 +46,8 @@ def main():
 def register_prometheus_collectors():
     collectors = {}
 
-    collectors["device_energy_w"] = prometheus_client.Gauge(
-        "emvue_device_energy_w",
+    collectors["device_energy_kwh"] = prometheus_client.Gauge(
+        "emvue_device_energy_kwh",
         "Energy Usage for device",
         ["device_name", "channel_name"],
     )
@@ -62,14 +62,12 @@ def set_prometheus_values(collectors, vue_client):
 
     for device, channels in data.items():
         for channel, usage in channels.items():
-            collectors["device_energy_w"].labels(
+            collectors["device_energy_kwh"].labels(
                 device_name=device, channel_name=channel
             ).set(usage)
 
 
 def get_data(vue_client):
-    SCALE_FACTOR = 3600000
-
     result = {}
 
     for device in vue_client.get_devices():
@@ -81,13 +79,13 @@ def get_data(vue_client):
         usage = vue_client.get_device_list_usage(
             deviceGids=[device.device_gid],
             instant=datetime.utcnow(),
-            scale=pyemvue.enums.Scale.SECOND.value,
+            scale=pyemvue.enums.Scale.MINUTE.value,
             unit=pyemvue.enums.Unit.KWH.value,
         )[device.device_gid]
 
         for item in usage.channels.items():
             channel = item[1]
             if channel.usage is not None:
-                result[device.device_name][channel.name] = channel.usage * SCALE_FACTOR
+                result[device.device_name][channel.name] = channel.usage
 
     return result
