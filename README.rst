@@ -34,13 +34,14 @@ Installation
 
 Easiest usage of this is to use the container image!
 
-```
-docker run -it \
-  -e EMVUE_EXPORTER_USERNAME=yourusernamehere \
-  -e EMVUE_EXPORTER_PASSWORD=yourpasswordhere \
-  -p 10110:10110 \
-  registry.gitlab.com/shouptech/emvue_exporter
-```
+::
+
+    docker run -it \
+      -e EMVUE_EXPORTER_USERNAME=yourusernamehere \
+      -e EMVUE_EXPORTER_PASSWORD=yourpasswordhere \
+      -p 10110:10110 \
+      registry.gitlab.com/shouptech/emvue_exporter
+
 
 Then, point prometheus to your container host, at port 10110.
 
